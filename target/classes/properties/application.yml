@@ -1,0 +1,6 @@
+# host
+#serverPort: 8088   #  配置启动端口号
+baseURI: http://127.0.0.1
+
+restExcelPath: src/main/resources/case01.xls
+

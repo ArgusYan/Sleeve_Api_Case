@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sleeve TestSuite01" preserve-order="true" verbose="2">
+    <test name="接口1：登录Token验证测试" preserve-order="true" verbose="2">
+        <classes>
+            <class name="com.test.api.TokenVerifyTest">
+                <methods>
+                    <include name="testLoginToken"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="接口2：浏览SPU测试" preserve-order="true" verbose="2" >
+        <classes>
+            <class name="com.test.api.SPULatestTest">
+                <methods>
+                    <include name="testScanSpu"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="多接口测试" preserve-order="true" verbose="2">
+        <classes>
+            <class name="com.test.api.OrderTest">
+                <methods>
+                    <include name="testCaseScanCoupon"/>
+                    <include name="testCaseCollectCoupon"/>
+                    <include name="testCaseScanMyCoupon"/>
+                    <include name="testCaseGetOrder"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+<!--    <test name="多接口测试" preserve-order="true" verbose="2">-->
+<!--        <classes>-->
+<!--            <class name="com.test.api.TestDemo">-->
+<!--                <methods>-->
+<!--                    <include name="test2"/>-->
+<!--                    <include name="test3"/>-->
+<!--                    <include name="test4"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <listeners>
+        <!-- ExtentReport 报告  -->
+        <listener class-name="com.test.api.core.config.ExtentTestNGIReporterListener"/>
+    </listeners>
+</suite>

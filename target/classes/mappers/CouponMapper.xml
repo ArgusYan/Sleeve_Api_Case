@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.api.dao.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.test.api.pojo.Coupon">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="start_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="full_money" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="minus" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="rate" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="type" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="delete_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="valitiy" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="activity_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="whole_store" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, start_time, end_time, description, full_money, minus, rate, type, create_time, 
+    update_time, delete_time, valitiy, activity_id, remark, whole_store
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.test.api.pojo.Coupon">
+    insert into coupon (id, title, start_time, 
+      end_time, description, full_money, 
+      minus, rate, type, 
+      create_time, update_time, delete_time, 
+      valitiy, activity_id, remark, 
+      whole_store)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{fullMoney,jdbcType=DECIMAL}, 
+      #{minus,jdbcType=DECIMAL}, #{rate,jdbcType=DECIMAL}, #{type,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleteTime,jdbcType=TIMESTAMP}, 
+      #{valitiy,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{wholeStore,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.api.pojo.Coupon">
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="fullMoney != null">
+        full_money,
+      </if>
+      <if test="minus != null">
+        minus,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+      <if test="valitiy != null">
+        valitiy,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="wholeStore != null">
+        whole_store,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="fullMoney != null">
+        #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="minus != null">
+        #{minus,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valitiy != null">
+        #{valitiy,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wholeStore != null">
+        #{wholeStore,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.api.pojo.Coupon">
+    update coupon
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="fullMoney != null">
+        full_money = #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="minus != null">
+        minus = #{minus,jdbcType=DECIMAL},
+      </if>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valitiy != null">
+        valitiy = #{valitiy,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wholeStore != null">
+        whole_store = #{wholeStore,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.api.pojo.Coupon">
+    update coupon
+    set title = #{title,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      full_money = #{fullMoney,jdbcType=DECIMAL},
+      minus = #{minus,jdbcType=DECIMAL},
+      rate = #{rate,jdbcType=DECIMAL},
+      type = #{type,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      valitiy = #{valitiy,jdbcType=INTEGER},
+      activity_id = #{activityId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      whole_store = #{wholeStore,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectCouponAtActivity" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from coupon
+    where activity_id = #{activityId,jdbcType=INTEGER}
+    and create_time &lt; now()
+    and end_time &gt; now()
+    and delete_time is null
+  </select>
+</mapper>

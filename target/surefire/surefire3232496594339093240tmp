@@ -1,0 +1,6 @@
+#surefire
+#Sun Apr 05 18:10:40 GMT+08:00 2020
+allure.results.directory=./target/allure-results
+user.dir=D\:\\IdeaProjects\\com.test.api\\target
+localRepository=E\:\\ideaMaven\\MavenRepository
+basedir=D\:\\IdeaProjects\\com.test.api
