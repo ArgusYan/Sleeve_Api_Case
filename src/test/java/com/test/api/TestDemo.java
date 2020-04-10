@@ -80,27 +80,27 @@ public class TestDemo {
 //        AssertUtil.assertCollectEx();
 //    }
 //
-    @Test(priority = 3)
-    public void test2() {
-        HttpClientResult httpClientResult = null;
-        try {
-            Map<String,String> headers = new HashMap<>(0);
-
-            headers.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
-
-            String url = "http://localhost:8088/v1/coupon/collect/7";
-
-            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
-            ReportUtil.log(httpClientResult.getContent());
-        } catch (Exception e) {
-            ReportUtil.log(e.getMessage());
-            e.printStackTrace();
-        }
-        SqlSession sqlSession = SqlSessionUtils.getSqlSession();
-        UserCouponMapper userCouponMapper = sqlSession.getMapper(UserCouponMapper.class);
-        UserCoupon userCoupon = userCouponMapper.selectByUserIdAndCouponId(42, 7);
-        ReportUtil.log(userCoupon.toString());
-    }
+//    @Test(priority = 3)
+//    public void test2() {
+//        HttpClientResult httpClientResult = null;
+//        try {
+//            Map<String,String> headers = new HashMap<>(0);
+//
+//            headers.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
+//
+//            String url = "http://localhost:8088/v1/coupon/collect/7";
+//
+//            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
+//            ReportUtil.log(httpClientResult.getContent());
+//        } catch (Exception e) {
+//            ReportUtil.log(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        SqlSession sqlSession = SqlSessionUtils.getSqlSession();
+//        UserCouponMapper userCouponMapper = sqlSession.getMapper(UserCouponMapper.class);
+//        UserCoupon userCoupon = userCouponMapper.selectByUserIdAndCouponId(42, 7);
+//        ReportUtil.log(userCoupon.toString());
+//    }
 
 
     @Test(priority = 1)

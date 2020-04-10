@@ -36,7 +36,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGetWithoutHeadersAndParams(String url) throws Exception {
+    public HttpClientResult doGetWithoutHeadersAndParams(String url) throws Exception {
         return doGet(url, null, null);
     }
 
@@ -48,11 +48,11 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGetWithoutHeadersWithParams(String url, Map<String, String> params) throws Exception {
+    public HttpClientResult doGetWithoutHeadersWithParams(String url, Map<String, String> params) throws Exception {
         return doGet(url, null, params);
     }
 
-    public static HttpClientResult doGetWithHeadersWithoutParams(String url, Map<String, String> headers) throws Exception {
+    public HttpClientResult doGetWithHeadersWithoutParams(String url, Map<String, String> headers) throws Exception {
         return doGet(url, headers, null);
     }
 
@@ -65,7 +65,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doGet(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
+    public HttpClientResult doGet(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
         // 创建httpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -111,7 +111,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPostWithoutHeadersParams(String url) throws Exception {
+    public HttpClientResult doPostWithoutHeadersParams(String url) throws Exception {
         return doPost(url, null, null);
     }
 
@@ -123,7 +123,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPostWithoutHeadersWithParams(String url, Map<String, String> params) throws Exception {
+    public HttpClientResult doPostWithoutHeadersWithParams(String url, Map<String, String> params) throws Exception {
         return doPost(url, null, params);
     }
 
@@ -135,7 +135,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPostWithHeadersWithoutParams(String url, Map<String, String> headers) throws Exception {
+    public HttpClientResult doPostWithHeadersWithoutParams(String url, Map<String, String> headers) throws Exception {
         return doPost(url, headers, null);
     }
 
@@ -148,7 +148,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
+    public HttpClientResult doPost(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
         // 创建httpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -187,7 +187,7 @@ public class HttpClientTool {
     }
 
 
-    public static HttpClientResult doPostWithJson(String url, Map<String, String> headers, String json) throws Exception {
+    public HttpClientResult doPostWithJsonWithHeaders(String url, Map<String, String> headers, String json) throws Exception {
         // 创建httpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         // 创建http对象
@@ -206,6 +206,31 @@ public class HttpClientTool {
             // 执行请求并获得响应结果
             // 创建httpResponse对象
 
+            return getHttpClientResult(httpResponse, httpClient, httpPost);
+        } finally {
+            // 释放资源
+            release(httpResponse, httpClient);
+        }
+    }
+
+
+    public HttpClientResult doPostWithJsonWithoutHeaders(String url, String json) throws Exception {
+        // 创建httpClient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        // 创建http对象
+        HttpPost httpPost = new HttpPost(url);
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
+        httpPost.setConfig(requestConfig);
+        //第三步：给httpPost设置JSON格式的参数
+        StringEntity requestEntity = new StringEntity(json, "utf-8");
+        requestEntity.setContentEncoding("UTF-8");
+        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setEntity(requestEntity);
+        //第四步：发送HttpPost请求，获取返回值
+        CloseableHttpResponse httpResponse = null;
+        try {
+            // 执行请求并获得响应结果
+            // 创建httpResponse对象
             return getHttpClientResult(httpResponse, httpClient, httpPost);
         } finally {
             // 释放资源
@@ -233,7 +258,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doPut(String url, Map<String, String> params) throws Exception {
+    public HttpClientResult doPut(String url, Map<String, String> params) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPut httpPut = new HttpPut(url);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
@@ -257,7 +282,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doDelete(String url) throws Exception {
+    public HttpClientResult doDelete(String url) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpDelete httpDelete = new HttpDelete(url);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
@@ -279,7 +304,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult doDelete(String url, Map<String, String> params) throws Exception {
+    public HttpClientResult doDelete(String url, Map<String, String> params) throws Exception {
         if (params == null) {
             params = new HashMap<String, String>();
         }
@@ -294,7 +319,7 @@ public class HttpClientTool {
      * @param params
      * @param httpMethod
      */
-    public static void packageHeader(Map<String, String> params, HttpRequestBase httpMethod) {
+    public void packageHeader(Map<String, String> params, HttpRequestBase httpMethod) {
         // 封装请求头
         if (params != null) {
             Set<Map.Entry<String, String>> entrySet = params.entrySet();
@@ -312,7 +337,7 @@ public class HttpClientTool {
      * @param httpMethod
      * @throws UnsupportedEncodingException
      */
-    public static void packageParam(Map<String, String> params, HttpEntityEnclosingRequestBase httpMethod)
+    public void packageParam(Map<String, String> params, HttpEntityEnclosingRequestBase httpMethod)
             throws UnsupportedEncodingException {
         // 封装请求参数
         if (params != null) {
@@ -336,7 +361,7 @@ public class HttpClientTool {
      * @return
      * @throws Exception
      */
-    public static HttpClientResult getHttpClientResult(CloseableHttpResponse httpResponse,
+    public HttpClientResult getHttpClientResult(CloseableHttpResponse httpResponse,
                                                        CloseableHttpClient httpClient, HttpRequestBase httpMethod) throws Exception {
         // 执行请求
         httpResponse = httpClient.execute(httpMethod);
@@ -359,7 +384,7 @@ public class HttpClientTool {
      * @param httpClient
      * @throws IOException
      */
-    public static void release(CloseableHttpResponse httpResponse, CloseableHttpClient httpClient) throws IOException {
+    public void release(CloseableHttpResponse httpResponse, CloseableHttpClient httpClient) throws IOException {
         // 释放资源
         if (httpResponse != null) {
             httpResponse.close();
@@ -370,17 +395,17 @@ public class HttpClientTool {
     }
 
 
-    public static void main(String[] args) {
-        String url = "http://localhost:8088/v1/coupon/collect/7";
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
-        HttpClientResult httpClientResult = null;
-        try {
-            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(httpClientResult);
-    }
+//    public static void main(String[] args) {
+//        String url = "http://localhost:8088/v1/coupon/collect/7";
+//        Map<String, String> headers = new HashMap<>();
+//        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
+//        HttpClientResult httpClientResult = null;
+//        try {
+//            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(httpClientResult);
+//    }
 
 }

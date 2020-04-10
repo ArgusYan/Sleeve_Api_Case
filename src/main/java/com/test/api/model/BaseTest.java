@@ -81,10 +81,10 @@ public class BaseTest {
 
 
 
-    public static void main(String[] args) {
-        Calendar now = Calendar.getInstance();
-        Date time = now.getTime();
-        SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-        System.out.println(sdf1.format(time));
-    }
+//    public static void main(String[] args) {
+//        Calendar now = Calendar.getInstance();
+//        Date time = now.getTime();
+//        SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+//        System.out.println(sdf1.format(time));
+//    }
 }

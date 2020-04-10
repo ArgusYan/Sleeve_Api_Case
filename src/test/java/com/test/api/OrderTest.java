@@ -64,7 +64,7 @@ public class OrderTest {
         String url = data.get("url");
         HttpClientResult httpClientResult = null;
         try {
-            httpClientResult = HttpClientTool.doGetWithoutHeadersAndParams(url);
+            httpClientResult = new HttpClientTool().doGetWithoutHeadersAndParams(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class OrderTest {
         headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
         HttpClientResult httpClientResult = null;
         try {
-            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(data.get("url") + data.get("params").trim(), headers);
+            httpClientResult = new HttpClientTool().doPostWithHeadersWithoutParams(data.get("url") + data.get("params").trim(), headers);
             ReportUtil.log(httpClientResult.getContent());
         } catch (Exception e) {
             ReportUtil.log(e.getMessage());
@@ -136,7 +136,7 @@ public class OrderTest {
         HttpClientResult httpClientResult = null;
         try {
             System.out.println(data.get("url") + data.get("params"));
-            httpClientResult = HttpClientTool.doGetWithHeadersWithoutParams(data.get("url") + data.get("params"), headers);
+            httpClientResult = new HttpClientTool().doGetWithHeadersWithoutParams(data.get("url") + data.get("params"), headers);
         } catch (Exception e) {
             ReportUtil.log("=====>异常为：" + e.getMessage());
             e.printStackTrace();
@@ -167,7 +167,7 @@ public class OrderTest {
 //            OrderDTO orderDTO = GenericAndJson.jsonToObjOrCollection(data.get("params"), new TypeReference<OrderDTO>() {
 //            });
 //            String json = GenericAndJson.ObjToJson(orderDTO);
-            httpClientResult = HttpClientTool.doPostWithJson(data.get("url").trim(), headers, data.get("params"));
+            httpClientResult = new HttpClientTool().doPostWithJsonWithHeaders(data.get("url").trim(), headers, data.get("params"));
         } catch (Exception e) {
             ReportUtil.log(e.getMessage());
             e.printStackTrace();

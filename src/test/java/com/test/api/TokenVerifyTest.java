@@ -7,14 +7,19 @@
  */
 package com.test.api;
 
+import com.test.api.common.ClientType;
 import com.test.api.common.HttpClientResult;
 import com.test.api.common.HttpClientTool;
+import com.test.api.common.HttpClientToolAlter;
 import com.test.api.core.enums.HttpStatusEnum;
+import com.test.api.dto.ClientDTO;
+import com.test.api.interfaces.InterfaceTokenVerify;
 import com.test.api.model.BaseTest;
 import com.test.api.model.DataProviders;
 import com.test.api.model.TestProcessor;
 import com.test.api.utils.*;
 import com.test.api.utils.assertModule.AssertUtil;
+import org.checkerframework.checker.units.qual.C;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -22,6 +27,7 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class TokenVerifyTest extends BaseTest{
     /**
@@ -61,12 +67,14 @@ public class TokenVerifyTest extends BaseTest{
      * @param datas 参数化数据
      */
     public void testCaseWithToken01(HashMap<String, String> datas) {
-        String url = datas.get("url");
         Map<String, String> headers = new HashMap<>();
         headers.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyLCJzY29wZSI6OCwiZXhwIjoxNTg2NzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
+        ClientDTO clientDTO = ClientDTO.builder().url(datas.get("url")).headers(headers).build();
         HttpClientResult httpClientResult = null;
         try {
-            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
+            InterfaceTokenVerify tokenVerify = new InterfaceTokenVerify();
+            tokenVerify.setClientParams(clientDTO);
+            httpClientResult = tokenVerify.client(InterfaceTokenVerify.TYPE1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,10 +85,13 @@ public class TokenVerifyTest extends BaseTest{
     }
 
     public void testCaseWithoutToken02(HashMap<String, String> datas) {
-        String url = datas.get("url");
+        ClientDTO clientDTO = ClientDTO.builder().url(datas.get("url")).build();
         HttpClientResult httpClientResult = null;
         try {
-            httpClientResult = HttpClientTool.doPostWithoutHeadersParams(url);
+            InterfaceTokenVerify tokenVerify = new InterfaceTokenVerify();
+//            tokenVerify.clientParams = clientDTO;
+            tokenVerify.setClientParams(clientDTO);
+            httpClientResult = tokenVerify.client(InterfaceTokenVerify.TYPE2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,12 +103,14 @@ public class TokenVerifyTest extends BaseTest{
 
 
     public void testCaseWithExpiredToken03(HashMap<String, String> datas) {
-        String url = datas.get("url");
         Map<String, String> headers = new HashMap<>();
         headers.put("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjQyCJGjHGFJfVjGKUzYyOTU3LCJpYXQiOjE1ODU4OTg5NTd9.MhLNh3sbcFUXrW0D6QG_g1KWg2P96V5KRwn5G-XwOSM");
+        ClientDTO clientDTO = ClientDTO.builder().url(datas.get("url")).headers(headers).build();
         HttpClientResult httpClientResult = null;
         try {
-            httpClientResult = HttpClientTool.doPostWithHeadersWithoutParams(url, headers);
+            InterfaceTokenVerify tokenVerify = new InterfaceTokenVerify();
+            tokenVerify.setClientParams(clientDTO);
+            httpClientResult = tokenVerify.client(InterfaceTokenVerify.TYPE1);
         } catch (Exception e) {
             e.printStackTrace();
         }

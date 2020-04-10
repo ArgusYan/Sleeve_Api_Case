@@ -1,21 +1,17 @@
 package com.test.api;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.test.api.common.HttpClientResult;
-import com.test.api.common.HttpClientTool;
-import com.test.api.core.config.AssertListener;
 import com.test.api.core.enums.HttpStatusEnum;
+import com.test.api.dto.ClientDTO;
+import com.test.api.interfaces.InterfaceSpu;
 import com.test.api.model.*;
-import com.test.api.utils.ExcelUtil;
 import com.test.api.utils.GenericAndJson;
 import com.test.api.utils.ReportUtil;
 import com.test.api.utils.assertModule.AssertUtil;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -68,46 +64,40 @@ public class SPULatestTest extends BaseTest{
      * @param datas
      */
     public void testCaseScanSpu02(HashMap<String, String> datas) {
-
-        String url = datas.get("url");
-        HttpClientResult httpClientResult = null;
-        try {
-            Map<String,String> header = new HashMap<>();
-            header.put("Content-Type", "application/json");
-            Map<String, String> params = GenericAndJson.jsonToObjOrCollection(datas.get("params"), new TypeReference<Map<String, String>>() {
-            });
-            httpClientResult = HttpClientTool.doGet(url,header,params);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert httpClientResult != null;
+        HttpClientResult httpClientResult = this.runClient(datas);
         //断言 响应的数据 的count值是否为10
         AssertUtil.assertEquals(httpClientResult,"count","10");
-
         BaseTest.testAssert(datas,httpClientResult);
         AssertUtil.assertResCode(httpClientResult, HttpStatusEnum.OK.code());
         AssertUtil.assertCollectEx();
     }
 
     public void testCaseScanSpu01(HashMap<String, String> datas) {
-        String url = datas.get("url");
-        HttpClientResult httpClientResult = null;
-        try {
-            Map<String,String> header = new HashMap<>();
-            header.put("Accept", "application/json");
-            Map<String, String> params = GenericAndJson.jsonToObjOrCollection(datas.get("params"), new TypeReference<Map<String, String>>() {
-            });
-            httpClientResult = HttpClientTool.doGet(url,header,params);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert httpClientResult != null;
+        HttpClientResult httpClientResult = this.runClient(datas);
         //断言 响应的数据 的count值是否为5
         AssertUtil.assertEquals(httpClientResult,"count","5");
         BaseTest.testAssert(datas,httpClientResult);
         //断言 响应的Code码是否为201
         AssertUtil.assertResCode(httpClientResult,HttpStatusEnum.OK.code());
         AssertUtil.assertCollectEx();
+    }
+
+    private HttpClientResult runClient(HashMap<String, String> datas) {
+        HttpClientResult httpClientResult = null;
+        Map<String,String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        Map<String, String> params = GenericAndJson.jsonToObjOrCollection(datas.get("params"), new TypeReference<Map<String, String>>() {
+        });
+        ClientDTO clientDTO = ClientDTO.builder().url(datas.get("url")).headers(header).params(params).build();
+        InterfaceSpu interfaceSpu = new InterfaceSpu();
+        interfaceSpu.setClientParams(clientDTO);
+        try {
+            httpClientResult = interfaceSpu.client(InterfaceSpu.TYPE1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assert httpClientResult != null;
+        return httpClientResult;
     }
 
 
