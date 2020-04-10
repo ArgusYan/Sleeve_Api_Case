@@ -90,7 +90,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>[1.2.31,)</version>
+            <version>1.2.47</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -112,20 +112,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>com.test.api</artifactId>
-            <version>1.1.9</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/reportng-1.1.9.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>com.test.api</artifactId>
-            <version>1.7-dep</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/velocity-1.7-dep.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
